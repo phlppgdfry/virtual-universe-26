@@ -20,15 +20,26 @@ same `gh` commands you ran by hand in Section 1.
 2. Pick the issue. Use the number you were given, or list open issues and ask:
    `gh issue list --state open`
 3. Read the issue and the code it mentions: `gh issue view <n>`
-4. Create a branch: `git switch -c fix/issue-<n>`
-5. Make the smallest change that fixes the issue, and run the project's tests
+4. If the fix depends on library or API behavior, use the Context7 connector
+   to resolve the relevant library and query its current public documentation
+   before coding. Send only public documentation questions; never include
+   repository files, secrets, credentials, or other private data. If Context7
+   is unavailable, report that plainly and do not claim that a lookup
+   succeeded.
+5. Create a branch: `git switch -c fix/issue-<n>`
+6. Make the smallest change that fixes the issue, and run the project's tests
    if it has any.
-6. Commit only the files you changed for this issue, push the branch to the
+7. Run the built-in `/security-review` skill on the changes before committing
+   or opening the pull request. Fix every HIGH or CRITICAL finding, then
+   rerun the review. Include any remaining findings in the pull request body.
+8. Commit only the files you changed for this issue, push the branch to the
    fork, and open a draft pull request that closes the issue:
    - `gh pr create --draft --title "Fix #<n>: <issue title>" --body "<body>"`
    - Start the body with "Closes #<n>", then add a short summary and a
-     "How to test" section with the exact commands a reviewer can run.
-7. Ask before commenting on the issue with what changed and how to test it.
+     "How to test" section with the exact commands a reviewer can run. When
+     Context7 was used, cite the relevant documentation sources in the PR body,
+     and list any remaining security-review findings.
+9. Ask before commenting on the issue with what changed and how to test it.
    Report the exact issue, PR, and branch. Leave this PR branch checked out so
    the learner can review it in the same session; do not switch branches.
 
